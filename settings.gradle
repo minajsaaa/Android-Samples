@@ -1,1 +1,1 @@
-include ':app', ':alcoholsensor', ':smartlamp', ':library', ':humantempz'
+include ':app', ':alcoholsensor', ':smartlamp', ':library', ':humantempz', ':colorwheel', ':samples', ':colorwheel'

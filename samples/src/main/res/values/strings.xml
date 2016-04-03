@@ -1,11 +1,18 @@
 <resources>
-    <string name="app_name">library</string>
+    <string name="app_name">Samples</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="scan_for_device">scan for devices</string>
-    <string name="bluetooth_connect">Bluetooth Devices</string>
+    <string-array name="example_activities">
+        <item>ColorWheelExample</item>
+        <item>LedButtonExample</item>
+        <!--  Examples still to implement:
+         <item>ReadRFDuinoExample</item>
+          <item>SetClockExample</item>
+          <item>ReadBatteryLevelExample</item>
+          <item>ProximitySensorExample</item>
 
-
-    <!--   ColorWheel     -->
+          -->
+    </string-array>
 
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
@@ -17,7 +24,6 @@
     <string name="settings_bg_color_confirm">Confirm this color?</string>
     <string name="settings_default_color_confirm">Confirm default color?</string>
     <string name="settings_bg_color_dialog">Choose a color!</string>
-
 
 </resources>
 

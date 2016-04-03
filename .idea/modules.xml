@@ -5,8 +5,10 @@
       <module fileurl="file://$PROJECT_DIR$/Android-Samples.iml" filepath="$PROJECT_DIR$/Android-Samples.iml" />
       <module fileurl="file://$PROJECT_DIR$/alcoholsensor/alcoholsensor.iml" filepath="$PROJECT_DIR$/alcoholsensor/alcoholsensor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/colorwheel/colorwheel.iml" filepath="$PROJECT_DIR$/colorwheel/colorwheel.iml" />
       <module fileurl="file://$PROJECT_DIR$/humantempz/humantempz.iml" filepath="$PROJECT_DIR$/humantempz/humantempz.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartlamp/smartlamp.iml" filepath="$PROJECT_DIR$/smartlamp/smartlamp.iml" />
     </modules>
   </component>

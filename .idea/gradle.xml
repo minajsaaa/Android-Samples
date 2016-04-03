@@ -12,8 +12,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/alcoholsensor" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/colorwheel" />
             <option value="$PROJECT_DIR$/humantempz" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/samples" />
             <option value="$PROJECT_DIR$/smartlamp" />
           </set>
         </option>
