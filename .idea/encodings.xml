@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/MainActivity.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/activity/GraphSettingActivity.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/activity/TerminalSettingActivity.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/adapter/PagerAdapter.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/bluetooth/BlueToothActivity.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/component/NonViewPager.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/constant/State.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/fragment/BaseFragment.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/fragment/NavigationDrawerFragment.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/manager/TextFileManager.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/java/com/blueinno/android/alcoholsensor/util/PreferenceUtil.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-hdpi" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-mdpi" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xhdpi" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xxhdpi" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xxhdpi/alcohol.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xxhdpi/drawer_shadow.9.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xxhdpi/ic_drawer.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xxhdpi/menu.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable-xxhdpi/menu2.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/drawable/shape_circle.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout/fragment_devices.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout/fragment_graph.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout/fragment_navigation_drawer.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout/fragment_settings.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout/fragment_terminal.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/layout/navigation_list_item.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/menu" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/values" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/values-w820dp" charset="x-windows-949" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

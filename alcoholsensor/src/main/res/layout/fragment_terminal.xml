@@ -1,0 +1,139 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:weightSum="100"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:layout_weight="50"
+            android:id="@+id/SCROLLER_ID"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="#FFFFFF"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:textSize="15dp"
+                    android:id="@+id/text_conc"
+                    android:paddingLeft="5dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="This is your alcohol concentration"/>
+            </LinearLayout>
+            <FrameLayout
+                android:background="#EDEDED"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <TextView
+                    android:textColor="#00BCD4"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="125dp"
+                    android:id="@+id/terminalTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+                <TextView
+                    android:paddingBottom="45dp"
+                    android:id="@+id/ppm_text"
+                    android:layout_marginRight="15dp"
+                    android:textSize="30dp"
+                    android:textColor="#00BCD4"
+                    android:layout_gravity="right"
+                    android:text="ppm"
+                    android:gravity="bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp" />
+            </FrameLayout>
+            <LinearLayout
+                android:background="#BDBDBD"
+                android:layout_width="match_parent"
+                android:layout_height="1px">
+
+            </LinearLayout>
+            <TextView
+                android:background="#FFFFFF"
+                android:textStyle="bold"
+                android:id="@+id/top_text"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                android:text="You may drive!"/>
+            <LinearLayout
+                android:background="#BDBDBD"
+                android:layout_width="match_parent"
+                android:layout_height="1px">
+
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical|bottom"
+                android:paddingLeft="15dp"
+                android:text="When the digit is"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:background="#FFFFFF"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:id="@+id/terminal_top"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        <TextView
+            android:textSize="15dp"
+            android:paddingLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="500 ~ 1000 : suspension of license" />
+
+            <TextView
+            android:layout_marginTop="5dp"
+            android:textSize="15dp"
+            android:paddingLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:text="1000 ~  : revocation of license" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#FFFFFF"
+            android:layout_weight="5"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/arg_1"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="To make a logfile, push the button below"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/logButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#002884"
+        android:text="Start Logging"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
