@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">스마트 전등 제어</string>
+    <string name="connect">연결</string>
+</resources>

@@ -1,1 +1,1 @@
-include ':app', ':alcoholsensor'
+include ':app', ':alcoholsensor', ':smartlamp', ':library'
