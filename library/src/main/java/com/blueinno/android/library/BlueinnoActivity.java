@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -82,6 +84,24 @@ public class BlueinnoActivity extends BaseActivity implements BluetoothAdapter.L
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Log.e("rrobbie", "update : " + temp + " / " + dateFormat.format(calendar.getTime()));
+/*
+        Log.e("rrobbie", "update : " + temp + " / " + dateFormat.format(calendar.getTime()));
+        int color = mColorPickerView.getColor();
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 0) & 0xFF;*/
+    }
+
+    protected void send(byte[] data) {
+        if( blueinnoService == null )
+            return;
+
+        try {
+            blueinnoService.send(data);
+        } catch (Exception e) {
+            Log.w("rrobbie", "Lost connection to service", e);
+            unbindService(blueinnoServiceConnection);
+        }
     }
 
     //  ========================================================================================

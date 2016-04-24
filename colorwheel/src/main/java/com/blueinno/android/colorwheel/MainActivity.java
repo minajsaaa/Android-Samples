@@ -143,7 +143,6 @@ public class MainActivity extends BlueinnoActivity implements ColorPickerView.On
                 int g = (color >> 8) & 0xFF;
                 int b = (color >> 0) & 0xFF;
 
-
                 break;
         }
 

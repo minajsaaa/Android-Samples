@@ -2,8 +2,10 @@ package com.blueinno.android.smartlamp;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
@@ -29,6 +31,10 @@ import com.blueinno.android.smartlamp.task.ReservationTimerTask;
 import com.blueinno.android.smartlamp.util.CommonUtil;
 import com.squareup.otto.Subscribe;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Timer;
 
 public class MainActivity extends BlueinnoActivity
@@ -139,13 +145,6 @@ public class MainActivity extends BlueinnoActivity
         enableMode(lampSwitchCompat.isChecked());
     }
 
-    @Override
-    protected void update(byte[] data) {
-        super.update(data);
-
-        Log.e("rrobbie", "update : " + data);
-    }
-
     //  ======================================================================================
 
     Handler mHandler = new Handler() {
@@ -171,7 +170,35 @@ public class MainActivity extends BlueinnoActivity
     private void timerPickerEnableMode(boolean flag) {
         int color = flag ? android.R.color.holo_red_dark : android.R.color.darker_gray;
         cardviewTimePicker.setEnabled(flag);
-        timerField.setTextColor(getResources().getColor(color));
+        timerField.setTextColor(ContextCompat.getColor(mContext, color));
+    }
+
+    private byte[] getValue() {
+        int value;
+        if( !lampSwitchCompat.isChecked() ) {
+            value = 0;
+        } else {
+            value = appCompatSeekBar.getProgress();
+        }
+        Toast.makeText(mContext, ("get value : " + value), Toast.LENGTH_SHORT ).show();
+        return new byte[]{(byte) Color.red(100), (byte) Color.green(125), (byte) Color.blue(value)};
+    }
+
+    @Override
+    protected void update(byte[] data) {
+        super.update(data);
+
+        float f = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+        String temp = String.format("%.1f", f);
+        Log.e("rrobbie", "update : " + temp);
+        Toast.makeText(mContext, ("receive : " + temp) , Toast.LENGTH_SHORT ).show();
+/*
+        Log.e("rrobbie", "update : " + temp + " / " + dateFormat.format(calendar.getTime()));
+        int color = mColorPickerView.getColor();
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = (color >> 0) & 0xFF;*/
+
     }
 
     //  ======================================================================================
@@ -181,10 +208,13 @@ public class MainActivity extends BlueinnoActivity
         switch (v.getId()) {
             case R.id.cardviewLamp:
                 lampSwitchCompat.setChecked(!lampSwitchCompat.isChecked());
+                Log.d("rrobbie", "check : " + lampSwitchCompat.isChecked() );
+                send(getValue());
                 break;
 
             case R.id.cardviewTimer:
                 timerSwitchCompat.setChecked(!timerSwitchCompat.isChecked());
+                cardviewTimePicker.setEnabled(timerSwitchCompat.isChecked());
                 break;
 
             case R.id.cardviewTimePicker:
@@ -227,9 +257,9 @@ public class MainActivity extends BlueinnoActivity
     @Override public void onStartTrackingTouch(SeekBar seekBar) {}
     @Override public void onStopTrackingTouch(SeekBar seekBar) {
         Log.d("rrobbie", "stop : " + appCompatSeekBar.getProgress() );
-        Toast.makeText(mContext, "센서 밝기 데이터 전달 및 상태 저장", Toast.LENGTH_SHORT).show();
         PreferenceUtil.put(mContext, SharedProperty.LAMP_LIGHT, appCompatSeekBar.getProgress());
         lightField.setText(CommonUtil.getProgress(appCompatSeekBar.getProgress()));
+        send(getValue());
     }
 
     //  =========================================================================================
@@ -247,11 +277,12 @@ public class MainActivity extends BlueinnoActivity
 
     @Subscribe
     public void onNotificationEvent(NotificationEvent event) {
-        if( event.type == NotificationEvent.TIME_SETTING ) {
+        if( event.type == NotificationEvent.TIME_SETTING) {
             int timerValue = (Integer)event.data;
             timer.schedule(new ReservationTimerTask(), CommonUtil.getTimeSecond(timerValue));
-
-            Log.e("rrobbie", "notification : " + timerValue );
+/*
+            send(getValue());
+            Log.e("rrobbie", "notification : " + timerValue + " / ");*/
         }
     }
 
