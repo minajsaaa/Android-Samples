@@ -9,12 +9,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,25 +35,17 @@ import com.squareup.otto.Subscribe;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Timer;
 
 public class MainActivity extends BlueinnoActivity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, SeekBar.OnSeekBarChangeListener {
 
-    private CardView cardviewLamp;
-    private CardView cardviewTimer;
-    private CardView cardviewTimePicker;
-
-    private SwitchCompat lampSwitchCompat;
-    private SwitchCompat timerSwitchCompat;
-
+    private RelativeLayout cardviewLamp;
+    private RelativeLayout cardviewTimer;
+    private CheckBox lampSwitchCompat;
+    private CheckBox timerSwitchCompat;
     private AppCompatSeekBar appCompatSeekBar;
-
     private TextView timerField;
-    private TextView lightField;
-
     private Timer timer;
 
     //  =======================================================================================
@@ -86,18 +80,17 @@ public class MainActivity extends BlueinnoActivity
     public void createChildren() {
         super.createChildren();
 
-        cardviewLamp = (CardView) findViewById(R.id.cardviewLamp);
-        cardviewTimer = (CardView) findViewById(R.id.cardviewTimer);
-        cardviewTimePicker = (CardView) findViewById(R.id.cardviewTimePicker);
+        startActivity(new Intent(MainActivity.this, IntroActivity.class));
 
-        lampSwitchCompat = (SwitchCompat) findViewById(R.id.lampSwitchCompat);
-        timerSwitchCompat = (SwitchCompat) findViewById(R.id.timerSwitchCompat);
+        cardviewLamp = (RelativeLayout) findViewById(R.id.cardviewLamp);
+        cardviewTimer = (RelativeLayout) findViewById(R.id.cardviewTimer);
+
+        lampSwitchCompat = (CheckBox) findViewById(R.id.lampSwitchCompat);
+        timerSwitchCompat = (CheckBox) findViewById(R.id.timerSwitchCompat);
 
         appCompatSeekBar = (AppCompatSeekBar) findViewById(R.id.seekBar);
 
-        lightField = (TextView) findViewById(R.id.lightField);
         timerField = (TextView) findViewById(R.id.timerField);
-
         timer = new Timer();
     }
 
@@ -114,7 +107,7 @@ public class MainActivity extends BlueinnoActivity
 
         cardviewLamp.setOnClickListener(this);
         cardviewTimer.setOnClickListener(this);
-        cardviewTimePicker.setOnClickListener(this);
+        timerField.setOnClickListener(this);
 
         lampSwitchCompat.setOnCheckedChangeListener(this);
         timerSwitchCompat.setOnCheckedChangeListener(this);
@@ -133,7 +126,7 @@ public class MainActivity extends BlueinnoActivity
         lampSwitchCompat.setChecked(lamp);
         timerSwitchCompat.setChecked(timerLamp);
         appCompatSeekBar.setProgress(light);
-        lightField.setText(CommonUtil.getProgress(light));
+//        lightField.setText(CommonUtil.getProgress(light));
 
         if( timerValue > 0 ) {
             timerField.setText( CommonUtil.getTimeFormat(timerValue) );
@@ -169,7 +162,6 @@ public class MainActivity extends BlueinnoActivity
 
     private void timerPickerEnableMode(boolean flag) {
         int color = flag ? android.R.color.holo_red_dark : android.R.color.darker_gray;
-        cardviewTimePicker.setEnabled(flag);
         timerField.setTextColor(ContextCompat.getColor(mContext, color));
     }
 
@@ -214,10 +206,9 @@ public class MainActivity extends BlueinnoActivity
 
             case R.id.cardviewTimer:
                 timerSwitchCompat.setChecked(!timerSwitchCompat.isChecked());
-                cardviewTimePicker.setEnabled(timerSwitchCompat.isChecked());
                 break;
 
-            case R.id.cardviewTimePicker:
+            case R.id.timerField:
                 AppCompatDialogFragment newFragment = new TimePickerFragment();
                 newFragment.show(getSupportFragmentManager(),"TimePicker");
                 break;
@@ -256,9 +247,9 @@ public class MainActivity extends BlueinnoActivity
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)  {}
     @Override public void onStartTrackingTouch(SeekBar seekBar) {}
     @Override public void onStopTrackingTouch(SeekBar seekBar) {
-        Log.d("rrobbie", "stop : " + appCompatSeekBar.getProgress() );
+        Log.d("rrobbie", "stop : " + appCompatSeekBar.getProgress());
         PreferenceUtil.put(mContext, SharedProperty.LAMP_LIGHT, appCompatSeekBar.getProgress());
-        lightField.setText(CommonUtil.getProgress(appCompatSeekBar.getProgress()));
+//        lightField.setText(CommonUtil.getProgress(appCompatSeekBar.getProgress()));
         send(getValue());
     }
 

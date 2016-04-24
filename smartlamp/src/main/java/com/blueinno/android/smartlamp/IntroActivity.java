@@ -1,20 +1,14 @@
 package com.blueinno.android.smartlamp;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatSeekBar;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.SwitchCompat;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
+import com.blueinno.android.library.constant.State;
 import com.blueinno.android.library.core.BaseActivity;
+import com.blueinno.android.library.event.bluetooth.BluetoothEvent;
+import com.blueinno.android.library.event.provider.BusProvider;
 
-import java.util.Timer;
-
-/**
- * Created by Rrobbie on 2016-04-24.
- */
 public class IntroActivity extends BaseActivity implements View.OnClickListener {
 
     private Button scanButton;
@@ -36,7 +30,8 @@ public class IntroActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-
+        startActivity(new Intent(IntroActivity.this, DeviceListActivity.class));
+        finish();
     }
 
 
