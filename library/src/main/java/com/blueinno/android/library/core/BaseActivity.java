@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 public class BaseActivity extends AppCompatActivity implements IBaseView {
 
     protected Context mContext;
-    protected String mScreen;
 
 //  =============================================================================================
 
@@ -33,8 +32,7 @@ public class BaseActivity extends AppCompatActivity implements IBaseView {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home: {
-//                onBackPressed();
-                supportFinishAfterTransition();
+                onBackPressed();
             }
         }
         return (super.onOptionsItemSelected(menuItem));

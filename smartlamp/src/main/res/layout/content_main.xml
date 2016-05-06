@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -11,104 +10,116 @@
     tools:context="com.blueinno.android.smartlamp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <RelativeLayout
-        android:id="@+id/cardviewLamp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/power" />
+        <RelativeLayout
+            android:id="@+id/cardviewLamp"
+            android:layout_width="match_parent"
+            android:layout_height="85dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/power" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="" />
+
+                <CheckBox
+                    android:id="@+id/lampSwitchCompat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@null"
+                    android:button="@drawable/checkbox"
+                    android:checked="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <CheckBox
-                android:id="@+id/lampSwitchCompat"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@null"
-                android:layout_width="wrap_content"
-                android:button="@drawable/checkbox"
-                android:checked="false" />
-
-            <TextView
+            <ImageView
+                android:id="@+id/lightField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="" />
+                android:src="@drawable/bright" />
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:max="5"
+                android:progressDrawable="@drawable/seekbarprogress"
+                android:thumb="@drawable/smallbutton" />
 
         </LinearLayout>
 
-    </RelativeLayout>
-
-    <LinearLayout
-
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/lightField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/bright" />
-
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/seekBar"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:id="@+id/cardviewTimer"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:max="5" />
+            android:layout_height="85dp">
+
+            <ImageView
+                android:id="@+id/timerIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/timer" />
+
+            <CheckBox
+                android:id="@+id/timerSwitchCompat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:button="@drawable/checkbox"
+                android:checked="false"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/timerField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/timerIcon"
+                android:padding="10dp"
+                android:textColor="@color/seekbar_progress_select"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/cardviewTimer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/timerIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/timer" />
-
-        <CheckBox
-            android:id="@+id/timerSwitchCompat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:button="@drawable/checkbox"
-            android:checked="false" />
-
-        <TextView
-            android:id="@+id/timerField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/timerSwitchCompat"
-            android:layout_toRightOf="@+id/timerIcon"
-            android:textColor="@android:color/holo_red_dark"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

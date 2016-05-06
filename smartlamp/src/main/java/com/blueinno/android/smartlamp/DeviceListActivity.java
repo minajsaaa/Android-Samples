@@ -2,13 +2,11 @@ package com.blueinno.android.smartlamp;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.blueinno.android.library.R;
 import com.blueinno.android.library.constant.State;
@@ -25,6 +23,8 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
     private ListView listView;
     private HashMap<String, BluetoothDevice> map = new HashMap<String, BluetoothDevice>();
     private ArrayAdapter adapter;
+
+    private Button connectButton;
 
     //  ========================================================================================
 
@@ -61,7 +61,6 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
         adapter.clear();
 
         BusProvider.getInstance().post(new BluetoothEvent(State.SCAN));
-
     }
 
     @Override
@@ -107,7 +106,7 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
+        BusProvider.getInstance().post(new BluetoothEvent(State.SCAN));
     }
 
     @Override

@@ -41,6 +41,8 @@ public class BlueinnoActivity extends BaseActivity implements BluetoothAdapter.L
 
     protected BluetoothManager bluetoothManager;
 
+    public  int REQUEST_ENABLE_BT = 1;
+
     //  ==========================================================================================
 
     @Override
@@ -62,16 +64,10 @@ public class BlueinnoActivity extends BaseActivity implements BluetoothAdapter.L
     public void createChildren() {
         super.createChildren();
 
+        Log.e("rrobbie", "create children : " + bluetoothAdapter );
+
         bluetoothManager =(BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
-
-        Log.e("rrobbie", "create children : " + bluetoothAdapter );
-    }
-
-    @Override
-    public void setProperties() {
-        super.setProperties();
-
     }
 
     //  ======================================================================================
@@ -108,6 +104,8 @@ public class BlueinnoActivity extends BaseActivity implements BluetoothAdapter.L
 
     public void scan() {
         scanStarted = true;
+        bluetoothManager =(BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        bluetoothAdapter = bluetoothManager.getAdapter();
         registerReceiver(scanModeReceiver, new IntentFilter(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED));
         registerReceiver(bluetoothStateReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
         registerReceiver(blueinnoReceiver, BlueinnoService.getIntentFilter());
@@ -217,14 +215,17 @@ public class BlueinnoActivity extends BaseActivity implements BluetoothAdapter.L
         bluetoothAdapter.stopLeScan(this);
         bluetoothDevice = device;
 
-        Log.e("rrobbie", "onLeScan : " + bluetoothDevice  );
+        Log.e("rrobbie", "onLeScan : " + bluetoothDevice);
 
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d("rrobbie", "device info : " + BluetoothHelper.getDeviceInfoText(bluetoothDevice, rssi, scanRecord) );
+                Log.d("rrobbie", "device info : " + BluetoothHelper.getDeviceInfoText(bluetoothDevice, rssi, scanRecord));
                 BusProvider.getInstance().post(new BluetoothEvent(State.CONNECTED, bluetoothDevice));
             }
         });
     }
+
+
+
 }

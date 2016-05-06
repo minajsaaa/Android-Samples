@@ -22,7 +22,9 @@ public class CommonUtil {
     public static String getTimeFormat(int value) {
         int hour = value / 60;
         int minute = value % 60;
-        return getTime(hour) + " : " + getTime(minute);
+        int hourDay = hour > 12 ? hour - 12 : hour;
+        String temp = hour > 12 ? "PM" : "AM";
+        return temp + " " + getTime(hourDay) + " : " + getTime(minute);
     }
 
 

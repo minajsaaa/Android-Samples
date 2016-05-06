@@ -44,17 +44,8 @@ public class TimePickerFragment extends AppCompatDialogFragment implements TimeP
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        TextView tv = (TextView) getActivity().findViewById(R.id.timerField);
-        String hour = String.valueOf(hourOfDay);
-        String min = String.valueOf(minute);
-
         int total = hourOfDay * 60 + minute;
         PreferenceUtil.put(getActivity(), SharedProperty.TIMER_VALUE, total);
-
-        String message = hour + "시 " + min + "분에 예약 설정 되었습니다.";
-        tv.setText( hour + " : " + min );
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
         BusProvider.getInstance().post(new NotificationEvent(NotificationEvent.TIME_SETTING, total));
     }
 }

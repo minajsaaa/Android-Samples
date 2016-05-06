@@ -1,5 +1,6 @@
 package com.blueinno.android.smartlamp;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,14 +9,12 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatSeekBar;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -68,6 +67,13 @@ public class MainActivity extends BlueinnoActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        byte[] min = new byte[]{(byte) Color.red(100), (byte) Color.green(125), (byte) Color.blue(0)};
+        send(min);
+        super.onDestroy();
+    }
+
     //  ======================================================================================
 
 
@@ -118,7 +124,7 @@ public class MainActivity extends BlueinnoActivity
     //  =====================================================================================
 
     private void initializeProperties() {
-        boolean lamp = PreferenceUtil.getValue(mContext, SharedProperty.LAMP, false);
+        boolean lamp = true;    //PreferenceUtil.getValue(mContext, SharedProperty.LAMP, false);
         boolean timerLamp = PreferenceUtil.getValue(mContext, SharedProperty.TIMER_LAMP, false);
         int light = PreferenceUtil.getValue(mContext, SharedProperty.LAMP_LIGHT, 3);
         int timerValue = PreferenceUtil.getValue(mContext, SharedProperty.TIMER_VALUE, -1);
@@ -132,7 +138,7 @@ public class MainActivity extends BlueinnoActivity
             timerField.setText( CommonUtil.getTimeFormat(timerValue) );
             timer.schedule(new ReservationTimerTask(), CommonUtil.getTimeSecond(timerValue));
         } else {
-            timerField.setText("설정된 시간이 없습니다.");
+            timerField.setText("");
         }
 
         enableMode(lampSwitchCompat.isChecked());
@@ -142,7 +148,7 @@ public class MainActivity extends BlueinnoActivity
 
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-            Toast.makeText(mContext, "센서 데이터 전달", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "센서 데이터 전달", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -161,7 +167,7 @@ public class MainActivity extends BlueinnoActivity
     }
 
     private void timerPickerEnableMode(boolean flag) {
-        int color = flag ? android.R.color.holo_red_dark : android.R.color.darker_gray;
+        int color = flag ? R.color.seekbar_progress_select : android.R.color.darker_gray;
         timerField.setTextColor(ContextCompat.getColor(mContext, color));
     }
 
@@ -170,9 +176,8 @@ public class MainActivity extends BlueinnoActivity
         if( !lampSwitchCompat.isChecked() ) {
             value = 0;
         } else {
-            value = appCompatSeekBar.getProgress();
+            value = appCompatSeekBar.getProgress() * 20;
         }
-        Toast.makeText(mContext, ("get value : " + value), Toast.LENGTH_SHORT ).show();
         return new byte[]{(byte) Color.red(100), (byte) Color.green(125), (byte) Color.blue(value)};
     }
 
@@ -180,10 +185,30 @@ public class MainActivity extends BlueinnoActivity
     protected void update(byte[] data) {
         super.update(data);
 
+        final ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+        try {
+            byte r = buffer.get();
+            byte g = buffer.get();
+            int temp = buffer.getInt();
+            Toast.makeText(mContext, ("받은값 정수 변환 : " + temp) , Toast.LENGTH_SHORT ).show();
+
+            if( temp > 0 ) {
+                on();
+                int value = temp / 20;
+                appCompatSeekBar.setProgress(value);
+            } else {
+                off();
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+/*
         float f = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat();
         String temp = String.format("%.1f", f);
         Log.e("rrobbie", "update : " + temp);
-        Toast.makeText(mContext, ("receive : " + temp) , Toast.LENGTH_SHORT ).show();
+*/
+
 /*
         Log.e("rrobbie", "update : " + temp + " / " + dateFormat.format(calendar.getTime()));
         int color = mColorPickerView.getColor();
@@ -200,21 +225,21 @@ public class MainActivity extends BlueinnoActivity
         switch (v.getId()) {
             case R.id.cardviewLamp:
                 lampSwitchCompat.setChecked(!lampSwitchCompat.isChecked());
-                Log.d("rrobbie", "check : " + lampSwitchCompat.isChecked() );
                 send(getValue());
                 break;
 
             case R.id.cardviewTimer:
-                timerSwitchCompat.setChecked(!timerSwitchCompat.isChecked());
+//                timerSwitchCompat.setChecked(!timerSwitchCompat.isChecked());
+                AppCompatDialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getSupportFragmentManager(), TimePickerFragment.class.getSimpleName());
                 break;
 
             case R.id.timerField:
-                AppCompatDialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getSupportFragmentManager(),"TimePicker");
+                AppCompatDialogFragment newFragment1 = new TimePickerFragment();
+                newFragment1.show(getSupportFragmentManager(), TimePickerFragment.class.getSimpleName());
                 break;
 
         }
-
     }
 
     @Override
@@ -247,10 +272,14 @@ public class MainActivity extends BlueinnoActivity
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)  {}
     @Override public void onStartTrackingTouch(SeekBar seekBar) {}
     @Override public void onStopTrackingTouch(SeekBar seekBar) {
-        Log.d("rrobbie", "stop : " + appCompatSeekBar.getProgress());
         PreferenceUtil.put(mContext, SharedProperty.LAMP_LIGHT, appCompatSeekBar.getProgress());
 //        lightField.setText(CommonUtil.getProgress(appCompatSeekBar.getProgress()));
-        send(getValue());
+        try {
+            send(getValue());
+            Toast.makeText(mContext, "전달값 : " + (seekBar.getProgress() * 20), Toast.LENGTH_SHORT ).show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //  =========================================================================================
@@ -260,7 +289,17 @@ public class MainActivity extends BlueinnoActivity
         if( event.type == State.CONNECTING ) {
             connect();
         } else if( event.type == State.SCAN ) {
-            scan();
+            if(!bluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+
+//                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+
+                Log.e("rrobbie", "inti");
+
+            } else {
+                scan();
+            }
         } else if( event.type == State.CONNECTED ) {
             bluetoothDevice = (BluetoothDevice)event.data;
         }
@@ -270,12 +309,31 @@ public class MainActivity extends BlueinnoActivity
     public void onNotificationEvent(NotificationEvent event) {
         if( event.type == NotificationEvent.TIME_SETTING) {
             int timerValue = (Integer)event.data;
+            String timeTemp = CommonUtil.getTimeFormat(timerValue);
             timer.schedule(new ReservationTimerTask(), CommonUtil.getTimeSecond(timerValue));
+            timerField.setText(CommonUtil.getTimeFormat(timerValue));
+            String message = "[ " + timeTemp + " ]" + " 예약 설정 되었습니다.";
+            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
 /*
             send(getValue());
-            Log.e("rrobbie", "notification : " + timerValue + " / ");*/
+*/
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("rrobbie", "result : " + (requestCode == REQUEST_ENABLE_BT) + " / " + (resultCode == RESULT_OK) );
+        if( requestCode == REQUEST_ENABLE_BT ) {
+
+            Log.e("rrobbie", "result : " + (resultCode == RESULT_OK));
+
+            if(resultCode == RESULT_OK) {
+                scan();
+            } else {
+                finish();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 }

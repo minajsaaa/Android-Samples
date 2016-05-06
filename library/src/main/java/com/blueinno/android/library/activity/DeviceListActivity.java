@@ -62,7 +62,7 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
         listView.setAdapter(adapter);
         adapter.clear();
 
-        scanButton = (Button)findViewById(R.id.scanButton);
+        BusProvider.getInstance().post(new BluetoothEvent(State.SCAN));
 
     }
 
@@ -71,7 +71,6 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
         super.configureListener();
 
         listView.setOnItemClickListener(this);
-        scanButton.setOnClickListener(this);
     }
 
     @Override
@@ -110,7 +109,7 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        BusProvider.getInstance().post(new BluetoothEvent(State.SCAN));
+
     }
 
     @Override
