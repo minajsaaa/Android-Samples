@@ -178,6 +178,9 @@ public class MainActivity extends BlueinnoActivity
         } else {
             value = appCompatSeekBar.getProgress() * 20;
         }
+
+        Log.e("rrobbie", "getValue : " + value );
+
         return new byte[]{(byte) Color.red(100), (byte) Color.green(125), (byte) Color.blue(value)};
     }
 
@@ -248,6 +251,7 @@ public class MainActivity extends BlueinnoActivity
             case R.id.lampSwitchCompat:
                 enableMode(isChecked);
                 PreferenceUtil.put(mContext, SharedProperty.LAMP, isChecked);
+                send(getValue());
                 break;
 
             case R.id.timerSwitchCompat:
