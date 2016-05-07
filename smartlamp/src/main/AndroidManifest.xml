@@ -23,13 +23,6 @@
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".IntroActivity"
-            android:label="@string/app_name">
-        </activity>
-
-        <activity
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
             android:name=".DeviceListActivity"
             android:label="@string/app_name">
         </activity>
