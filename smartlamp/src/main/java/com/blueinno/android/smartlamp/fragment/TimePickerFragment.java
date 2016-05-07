@@ -44,8 +44,12 @@ public class TimePickerFragment extends AppCompatDialogFragment implements TimeP
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        int total = hourOfDay * 60 + minute;
-        PreferenceUtil.put(getActivity(), SharedProperty.TIMER_VALUE, total);
-        BusProvider.getInstance().post(new NotificationEvent(NotificationEvent.TIME_SETTING, total));
+        try {
+            int total = hourOfDay * 60 + minute;
+            PreferenceUtil.put(getActivity(), SharedProperty.TIMER_VALUE, total);
+            BusProvider.getInstance().post(new NotificationEvent(NotificationEvent.TIME_SETTING, total));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }

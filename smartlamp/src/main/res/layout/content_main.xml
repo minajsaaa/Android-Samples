@@ -22,11 +22,17 @@
             android:layout_width="match_parent"
             android:layout_height="85dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/power" />
+                android:drawableLeft="@drawable/bigbutton"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="Power"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -35,77 +41,111 @@
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="" />
-
-                <CheckBox
+                <android.support.v7.widget.SwitchCompat
                     android:id="@+id/lampSwitchCompat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@null"
-                    android:button="@drawable/checkbox"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:thumb="@drawable/bigbutton" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="" />
+                    android:text="on"
+                    android:textColor="@color/seekbar_progress_select"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/cardviewLight"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:orientation="horizontal">
+            android:layout_height="85dp">
 
-            <ImageView
+            <TextView
                 android:id="@+id/lightField"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/bigbutton"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="Brightness"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/bright" />
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="max"
+                android:textColor="@color/seekbar_progress_select"
+                android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatSeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/textField"
+                android:layout_toRightOf="@id/lightField"
                 android:max="5"
                 android:progressDrawable="@drawable/seekbarprogress"
                 android:thumb="@drawable/smallbutton" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/cardviewTimer"
             android:layout_width="match_parent"
             android:layout_height="85dp">
 
-            <ImageView
+            <TextView
                 android:id="@+id/timerIcon"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@drawable/timer" />
+                android:drawableLeft="@drawable/bigbutton"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="Timer"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/timerSwitchCompat"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@null"
-                android:button="@drawable/checkbox"
-                android:checked="false"
-                android:visibility="invisible" />
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/timerSwitchCompat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:checked="false"
+                    android:track="@drawable/shape_switch_track"
+                    android:thumb="@drawable/bigbutton" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="on"
+                    android:textColor="@color/seekbar_progress_select"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/timerField"
@@ -113,7 +153,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/timerIcon"
-                android:padding="10dp"
                 android:textColor="@color/seekbar_progress_select"
                 android:textSize="30sp"
                 android:textStyle="bold" />

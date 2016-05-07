@@ -7,6 +7,10 @@
     android:background="@drawable/back2"
     tools:context="com.blueinno.android.smartlamp.MainActivity">
 
-    <include layout="@layout/content_main" />
+    <com.blueinno.android.smartlamp.component.NonViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.blueinno.android.smartlamp.component.NonViewPager>
 
 </android.support.design.widget.CoordinatorLayout>

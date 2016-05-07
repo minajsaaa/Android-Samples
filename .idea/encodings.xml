@@ -33,6 +33,8 @@
     <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/menu" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/values" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/alcoholsensor/src/main/res/values-w820dp" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/smartlamp/src/main/java/com/blueinno/android/smartlamp/adapter/PagerAdapter.java" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/smartlamp/src/main/java/com/blueinno/android/smartlamp/component/NonViewPager.java" charset="x-windows-949" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

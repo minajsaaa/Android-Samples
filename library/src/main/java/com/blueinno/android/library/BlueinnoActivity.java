@@ -41,7 +41,7 @@ public class BlueinnoActivity extends BaseActivity implements BluetoothAdapter.L
 
     protected BluetoothManager bluetoothManager;
 
-    public  int REQUEST_ENABLE_BT = 1;
+    public int REQUEST_ENABLE_BT = 1;
 
     //  ==========================================================================================
 

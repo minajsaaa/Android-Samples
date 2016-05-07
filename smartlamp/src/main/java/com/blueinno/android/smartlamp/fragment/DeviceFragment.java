@@ -1,4 +1,4 @@
-package com.blueinno.android.smartlamp;
+package com.blueinno.android.smartlamp.fragment;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.blueinno.android.library.R;
 import com.blueinno.android.library.constant.State;
 import com.blueinno.android.library.core.BaseActivity;
+import com.blueinno.android.library.core.BaseFragment;
 import com.blueinno.android.library.event.bluetooth.BluetoothEvent;
 import com.blueinno.android.library.event.provider.BusProvider;
 import com.squareup.otto.Subscribe;
@@ -18,24 +19,22 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DeviceListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class DeviceFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
     private HashMap<String, BluetoothDevice> map = new HashMap<String, BluetoothDevice>();
     private ArrayAdapter adapter;
 
-    private Button connectButton;
-
     //  ========================================================================================
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BusProvider.getInstance().register(this);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         BusProvider.getInstance().unregister(this);
         super.onDestroy();
     }
@@ -50,17 +49,13 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
     //  =========================================================================================
 
     public void createChildren() {
-        if( getSupportActionBar() != null ) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        super.createChildren();
 
-        listView = (ListView)findViewById(R.id.listView);
+        listView = (ListView)mView.findViewById(R.id.listView);
 
-        adapter = new ArrayAdapter(DeviceListActivity.this, android.R.layout.simple_list_item_1, new ArrayList());
+        adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, new ArrayList());
         listView.setAdapter(adapter);
         adapter.clear();
-
-        BusProvider.getInstance().post(new BluetoothEvent(State.SCAN));
     }
 
     @Override
@@ -105,13 +100,7 @@ public class DeviceListActivity extends BaseActivity implements View.OnClickList
     //  =======================================================================================
 
     @Override
-    public void onClick(View v) {
-        BusProvider.getInstance().post(new BluetoothEvent(State.SCAN));
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         BusProvider.getInstance().post(new BluetoothEvent(State.CONNECTING));
-        finish();
     }
 }

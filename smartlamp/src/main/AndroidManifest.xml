@@ -23,7 +23,7 @@
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".DeviceListActivity"
+            android:name=".fragment.DeviceFragment"
             android:label="@string/app_name">
         </activity>
 
