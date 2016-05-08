@@ -204,7 +204,6 @@ public class MainFragment extends BaseFragment
                     AppCompatDialogFragment newFragment = new TimePickerFragment();
                     newFragment.show(getChildFragmentManager(), TimePickerFragment.class.getSimpleName());
                     break;
-
             }
         }
     }
