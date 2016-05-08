@@ -123,7 +123,7 @@ public class MainFragment extends BaseFragment
 
         if( timerValue > 0 ) {
             timerField.setText( CommonUtil.getTimeFormat(timerValue) );
-            timer.schedule(new ReservationTimerTask(), CommonUtil.getTimeSecond(timerValue));
+            timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
         } else {
             timerField.setText("");
         }
@@ -150,12 +150,12 @@ public class MainFragment extends BaseFragment
 
     private void enableMode(boolean flag) {
         setTrackColor(lampSwitchCompat);
+        cardviewLight.setEnabled(flag);
+        appCompatSeekBar.setEnabled(flag);
         setTrackColor(timerSwitchCompat);
 
-        cardviewLight.setEnabled(flag);
-        timerSwitchCompat.setEnabled(flag);
-        appCompatSeekBar.setEnabled(flag);
-        timerPickerEnableMode(flag);
+//        timerSwitchCompat.setEnabled(flag);
+//        timerPickerEnableMode(flag);
     }
 
     private void timerPickerEnableMode(boolean flag) {
@@ -182,37 +182,15 @@ public class MainFragment extends BaseFragment
     }
 
     public void update(byte[] data) {
-        final ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
-        try {
-            byte r = buffer.get();
-            byte g = buffer.get();
-            int temp = buffer.getInt();
-            Toast.makeText(mContext, ("받은값 정수 변환 : " + temp) , Toast.LENGTH_SHORT ).show();
-
-            if( temp > 0 ) {
-                on();
-                int value = temp / 20;
-                appCompatSeekBar.setProgress(value);
-            } else {
-                off();
-            }
-
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-/*
         float f = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getFloat();
-        String temp = String.format("%.1f", f);
-        Log.e("rrobbie", "update : " + temp);
-*/
 
-/*
-        Log.e("rrobbie", "update : " + temp + " / " + dateFormat.format(calendar.getTime()));
-        int color = mColorPickerView.getColor();
-        int r = (color >> 16) & 0xFF;
-        int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;*/
-
+        if( f > 0 ) {
+            on();
+            int value = (int)f / 20;
+            appCompatSeekBar.setProgress(value);
+        } else {
+            off();
+        }
     }
 
     //  ======================================================================================
@@ -238,9 +216,6 @@ public class MainFragment extends BaseFragment
                 enableMode(isChecked);
                 PreferenceUtil.put(mContext, SharedProperty.LAMP, isChecked);
                 ((MainActivity)getActivity()).sendData( getValue() );
-
-
-
                 break;
 
             case R.id.timerSwitchCompat:
@@ -255,7 +230,7 @@ public class MainFragment extends BaseFragment
 
                         if( timerValue > 0 )
                             if( timer != null ) {
-                                timer.schedule(new ReservationTimerTask(), CommonUtil.getTimeSecond(timerValue));
+                                timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
                             }
                     }
                 } catch(Exception e) {
@@ -295,7 +270,7 @@ public class MainFragment extends BaseFragment
         if( event.type == NotificationEvent.TIME_SETTING) {
             int timerValue = (Integer)event.data;
             String timeTemp = CommonUtil.getTimeFormat(timerValue);
-            timer.schedule(new ReservationTimerTask(), CommonUtil.getTimeSecond(timerValue));
+            timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
             timerField.setText(CommonUtil.getTimeFormat(timerValue));
             String message = "[ " + timeTemp + " ]" + " 예약 설정 되었습니다.";
             Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
