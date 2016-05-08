@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -115,20 +116,14 @@ public class MainFragment extends BaseFragment
         boolean lamp = true;
         boolean timerLamp = PreferenceUtil.getValue(mContext, SharedProperty.TIMER_LAMP, false);
         int light = PreferenceUtil.getValue(mContext, SharedProperty.LAMP_LIGHT, 3);
-        int timerValue = PreferenceUtil.getValue(mContext, SharedProperty.TIMER_VALUE, -1);
 
         lampSwitchCompat.setChecked(lamp);
         timerSwitchCompat.setChecked(timerLamp);
         appCompatSeekBar.setProgress(light);
 
-        if( timerValue > 0 ) {
-            timerField.setText( CommonUtil.getTimeFormat(timerValue) );
-            timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
-        } else {
-            timerField.setText("");
-        }
-
         enableMode(lampSwitchCompat.isChecked());
+        setTrackColor(lampSwitchCompat);
+        setTrackColor(timerSwitchCompat);
     }
 
     //  ======================================================================================
@@ -149,10 +144,9 @@ public class MainFragment extends BaseFragment
     }
 
     private void enableMode(boolean flag) {
-        setTrackColor(lampSwitchCompat);
+
         cardviewLight.setEnabled(flag);
         appCompatSeekBar.setEnabled(flag);
-        setTrackColor(timerSwitchCompat);
 
 //        timerSwitchCompat.setEnabled(flag);
 //        timerPickerEnableMode(flag);
@@ -193,6 +187,24 @@ public class MainFragment extends BaseFragment
         }
     }
 
+    public void update(int value) {
+
+        appCompatSeekBar.setProgress(0);
+        off();
+    }
+
+    public void setTimer(int value) {
+        int timerValue = value;
+        String timeTemp = CommonUtil.getTimeFormat(timerValue);
+
+        timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
+        timerField.setText(CommonUtil.getTimeFormat(timerValue));
+        String message = "[ " + timeTemp + " ]" + " 예약 설정 되었습니다.";
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+
+        Log.e("rrobbie", timerValue + " / " + CommonUtil.getTimeSecond(timerValue)  );
+    }
+
     //  ======================================================================================
 
     @Override
@@ -201,8 +213,10 @@ public class MainFragment extends BaseFragment
             switch (v.getId()) {
                 case R.id.timerField:
                 case R.id.cardviewTimer:
-                    AppCompatDialogFragment newFragment = new TimePickerFragment();
-                    newFragment.show(getChildFragmentManager(), TimePickerFragment.class.getSimpleName());
+                    if( timerSwitchCompat.isChecked() ) {
+                        AppCompatDialogFragment newFragment = new TimePickerFragment();
+                        newFragment.show(getChildFragmentManager(), TimePickerFragment.class.getSimpleName());
+                    }
                     break;
             }
         }
@@ -213,17 +227,20 @@ public class MainFragment extends BaseFragment
         switch (buttonView.getId()) {
             case R.id.lampSwitchCompat:
                 enableMode(isChecked);
+                setTrackColor(lampSwitchCompat);
                 PreferenceUtil.put(mContext, SharedProperty.LAMP, isChecked);
                 ((MainActivity)getActivity()).sendData( getValue() );
                 break;
 
             case R.id.timerSwitchCompat:
+                setTrackColor(timerSwitchCompat);
+
                 try {
-                    timerPickerEnableMode(isChecked);
-                    PreferenceUtil.put(mContext, SharedProperty.TIMER_LAMP, isChecked);
+ //                  PreferenceUtil.put(mContext, SharedProperty.TIMER_LAMP, isChecked);
 
                     if( !isChecked ) {
                         timer.cancel();
+
                     } else {
                         int timerValue = PreferenceUtil.getValue(mContext, SharedProperty.TIMER_VALUE, -1);
 
@@ -232,6 +249,7 @@ public class MainFragment extends BaseFragment
                                 timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
                             }
                     }
+
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -261,18 +279,6 @@ public class MainFragment extends BaseFragment
     public void onBluetoothEvent(BluetoothEvent event) {
         if( event.type == State.CONNECTED ) {
             bluetoothDevice = (BluetoothDevice)event.data;
-        }
-    }
-
-    @Subscribe
-    public void onNotificationEvent(NotificationEvent event) {
-        if( event.type == NotificationEvent.TIME_SETTING) {
-            int timerValue = (Integer)event.data;
-            String timeTemp = CommonUtil.getTimeFormat(timerValue);
-            timer.schedule(new ReservationTimerTask(getActivity()), CommonUtil.getTimeSecond(timerValue));
-            timerField.setText(CommonUtil.getTimeFormat(timerValue));
-            String message = "[ " + timeTemp + " ]" + " 예약 설정 되었습니다.";
-            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
         }
     }
 

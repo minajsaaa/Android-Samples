@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.blueinno.android.library.event.provider.BusProvider;
 import com.blueinno.android.library.util.PreferenceUtil;
+import com.blueinno.android.smartlamp.MainActivity;
 import com.blueinno.android.smartlamp.R;
 import com.blueinno.android.smartlamp.constant.SharedProperty;
 import com.blueinno.android.smartlamp.event.NotificationEvent;
@@ -46,8 +47,9 @@ public class TimePickerFragment extends AppCompatDialogFragment implements TimeP
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         try {
             int total = hourOfDay * 60 + minute;
-            PreferenceUtil.put(getActivity(), SharedProperty.TIMER_VALUE, total);
-            BusProvider.getInstance().post(new NotificationEvent(NotificationEvent.TIME_SETTING, total));
+      //      PreferenceUtil.put(getActivity(), SharedProperty.TIMER_VALUE, total);
+            MainActivity.mainFragment.setTimer(total);
+//            BusProvider.getInstance().post(new NotificationEvent(NotificationEvent.TIME_SETTING, total));
         } catch(Exception e) {
             e.printStackTrace();
         }

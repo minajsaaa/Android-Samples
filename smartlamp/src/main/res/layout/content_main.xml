@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/bigbutton"
-                android:drawablePadding="10dp"
+                android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="Power"
                 android:textColor="@android:color/white"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/bigbutton"
-                android:drawablePadding="10dp"
+                android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="Brightness"
                 android:textColor="@android:color/white"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/bigbutton"
-                android:drawablePadding="10dp"
+                android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="Timer"
                 android:textColor="@android:color/white"
@@ -154,7 +154,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/timerIcon"
                 android:textColor="@color/seekbar_progress_select"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>

@@ -24,5 +24,6 @@ public class ReservationTimerTask extends TimerTask {
         int chosenColor = Color.rgb(100, 125, 0);
         byte[] color = new byte[]{(byte) Color.red(chosenColor), (byte) Color.green(chosenColor), (byte) Color.blue(chosenColor)};
         ((MainActivity)mContext).sendData(color);
+        MainActivity.mainFragment.update(0);
     }
 }

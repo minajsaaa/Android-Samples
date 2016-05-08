@@ -1,5 +1,7 @@
 package com.blueinno.android.smartlamp.util;
 
+import android.util.Log;
+
 /**
  * Created by rrobbie on 16. 3. 28..
  */
@@ -12,7 +14,10 @@ public class CommonUtil {
     //  =======================================================================================
 
     public static int getTimeSecond(int value) {
-        return value * 1000;
+        int now = value - (int)(System.currentTimeMillis()/60000);
+        Log.e("rrobbie", "time : " + value + " / " + System.currentTimeMillis() );
+        int result = (now * 1000);
+        return result > 0 ? result : 0;
     }
 
     public static String getTime(int value) {

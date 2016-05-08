@@ -24,7 +24,7 @@ public class MainActivity extends BlueinnoActivity {
     private NonViewPager viewPager;
     private PagerAdapter pagerAdapter;
 
-    MainFragment mainFragment;
+    public static MainFragment mainFragment;
 
     //  ======================================================================================
 
